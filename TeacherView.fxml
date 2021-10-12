@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane maxHeight="1080.0" maxWidth="1920.0" minHeight="5.0" minWidth="5.0" prefHeight="747.0" prefWidth="1124.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/15.0.1">
+   <children>
+      <ImageView fitHeight="781.0" fitWidth="1124.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@Metropolitan_State_Library_and_Learning_Center.jpg" />
+         </image>
+      </ImageView>
+      <MenuBar>
+        <menus>
+            <Menu mnemonicParsing="false" text="Login">
+               <items>
+                  <MenuItem mnemonicParsing="false" text="Change Password" />
+                  <MenuItem mnemonicParsing="false" text="Logout" />
+               </items>
+            </Menu>
+          <Menu mnemonicParsing="false" text="Manage Grades">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Add Grades" />
+                  <MenuItem mnemonicParsing="false" text="Remove Grades" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Manage Course Material">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Add Material" />
+                  <MenuItem mnemonicParsing="false" text="Remove Material" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Manage Assignments">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Add Assignment" />
+                  <MenuItem mnemonicParsing="false" text="Remove Assignment" />
+            </items>
+          </Menu>
+            <Menu mnemonicParsing="false" text="Messages">
+               <items>
+                  <MenuItem mnemonicParsing="false" text="Send Email" />
+                  <MenuItem mnemonicParsing="false" text="Check Email" />
+                  <MenuItem mnemonicParsing="false" text="Manage Meeting" />
+               </items>
+            </Menu>
+        </menus>
+      </MenuBar>
+   </children>
+</AnchorPane>
