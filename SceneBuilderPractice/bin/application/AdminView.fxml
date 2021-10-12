@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.TextFlow?>
+
+<AnchorPane maxHeight="1080.0" maxWidth="1920.0" minHeight="5.0" minWidth="5.0" prefHeight="773.0" prefWidth="1165.0" style="-fx-background-color: #778899;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.AdminController">
+   <children>
+      <ImageView fitHeight="916.0" fitWidth="1164.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@resizedPortal.jpg" />
+         </image>
+      </ImageView>
+      <MenuBar style="-fx-background-color: #808080;">
+        <menus>
+          <Menu mnemonicParsing="false" style="-fx-text-fill: #ffffff;" text="Manage Accounts">
+            <items>
+                  <Menu mnemonicParsing="false" text="Modify User">
+                     <items>
+                        <MenuItem mnemonicParsing="false" onAction="#createUser" text="Create Account" />
+                        <MenuItem mnemonicParsing="false" onAction="#removeUser" text="Delete Accounts" />
+                     </items>
+                  </Menu>
+            </items>
+          </Menu>
+            <Menu mnemonicParsing="false" text="Message">
+              <items>
+                <MenuItem mnemonicParsing="false" onAction="#sendMessage" text="Send Message - User" />
+                  <MenuItem mnemonicParsing="false" onAction="#sendMassMessage" text="Send Message - Mass" />
+                  <MenuItem mnemonicParsing="false" onAction="#checkMessages" text="Check Message" />
+              </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Login">
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#updateLogin" text="Change Password" />
+                  <MenuItem mnemonicParsing="false" onAction="#logout" text="Logout" />
+               </items>
+            </Menu>
+        </menus>
+      </MenuBar>
+      <TextFlow layoutX="580.0" layoutY="380.0" prefHeight="392.0" prefWidth="584.0">
+         <children>
+            <TextArea fx:id="textAreaLeft" editable="false" prefHeight="386.0" prefWidth="577.0" style="-fx-control-inner-background: #000000; -fx-highlight-fill: #00ff00; -fx-highlight-text-fill: #000000; -fx-text-fill: #00ff00;">
+               <font>
+                  <Font name="Consolas" size="14.0" />
+               </font>
+            </TextArea>
+         </children>
+      </TextFlow>
+      <AnchorPane fx:id="anchor" layoutX="7.0" layoutY="380.0" prefHeight="395.0" prefWidth="572.0">
+         <children>
+            <Button fx:id="sndMes" layoutX="341.0" layoutY="14.0" mnemonicParsing="false" onAction="#messageSent" prefHeight="25.0" prefWidth="51.0" style="-fx-background-color: #808080; -fx-text-fill: #ffffff;" text="Send">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Button>
+            <Button fx:id="mssMess" layoutX="341.0" layoutY="56.0" mnemonicParsing="false" onAction="#massSent" prefHeight="25.0" prefWidth="51.0" style="-fx-background-color: #808080; -fx-text-fill: #ffffff;" text="Send">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Button>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="userAnchor" layoutX="1.0" layoutY="84.0" prefHeight="296.0" prefWidth="584.0">
+         <children>
+            <TextField fx:id="newUser" layoutX="71.0" layoutY="86.0" promptText="username" style="-fx-background-color: #000000; -fx-text-fill: #00ff00;" />
+            <TextField fx:id="newPass" layoutX="292.0" layoutY="86.0" promptText="password" style="-fx-background-color: #000000; -fx-text-fill: #00ff00;" />
+            <TextField fx:id="newFirst" layoutX="71.0" layoutY="123.0" promptText="First Name" style="-fx-background-color: #000000; -fx-text-fill: #00ff00;" />
+            <TextField fx:id="newLast" layoutX="292.0" layoutY="123.0" promptText="Last Name" style="-fx-background-color: #000000; -fx-text-fill: #00ff00;" />
+            <TextField fx:id="newMI" layoutX="235.0" layoutY="123.0" prefHeight="25.0" prefWidth="44.0" promptText="MI" style="-fx-background-color: #000000; -fx-text-fill: #00ff00;" />
+            <TextField fx:id="newType" layoutX="72.0" layoutY="161.0" prefHeight="25.0" prefWidth="158.0" promptText="'Student'Teacher'Guardian'" style="-fx-background-color: #000000; -fx-text-fill: #00ff00;" />
+            <TextField fx:id="newPhone" layoutX="250.0" layoutY="161.0" prefHeight="25.0" prefWidth="191.0" promptText="Phone Number" style="-fx-background-color: #000000; -fx-text-fill: #00ff00;" />
+            <TextField fx:id="newAddr" layoutX="72.0" layoutY="197.0" prefHeight="25.0" prefWidth="369.0" promptText="Address" style="-fx-background-color: #000000; -fx-text-fill: #00ff00;" />
+            <TextField fx:id="newSchool" layoutX="72.0" layoutY="236.0" prefHeight="25.0" prefWidth="369.0" promptText="School" style="-fx-background-color: #000000; -fx-text-fill: #00ff00;" />
+            <Label fx:id="userLabel" layoutX="75.0" layoutY="24.0" prefHeight="42.0" prefWidth="369.0" textFill="WHITE">
+               <font>
+                  <Font name="Consolas Bold" size="18.0" />
+               </font>
+            </Label>
+            <Button fx:id="usrBT" layoutX="464.0" layoutY="86.0" mnemonicParsing="false" onAction="#userChanges" style="-fx-background-color: #808080; -fx-text-fill: #ffffff;" text="Submit">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Button>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

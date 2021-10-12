@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.TextFlow?>
+
+<AnchorPane prefHeight="151.0" prefWidth="1153.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.GuardianController">
+   <children>
+      <ImageView fitHeight="796.0" fitWidth="1160.0" layoutY="-6.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@resizedPortal.jpg" />
+         </image>
+      </ImageView>
+      <MenuBar layoutX="14.0" layoutY="14.0" prefHeight="25.0" prefWidth="255.0" style="-fx-background-color: #808080;">
+        <menus>
+          <Menu mnemonicParsing="false" text="Login">
+            <items>
+              <MenuItem mnemonicParsing="false" onAction="#logout" text="Logout" />
+                  <MenuItem mnemonicParsing="false" onAction="#changeLogin" text="Change Login" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" onAction="#getStudents" onHidden="#getStudents" onShowing="#getStudents" text="Student Progress">
+            <items>
+              <MenuItem mnemonicParsing="false" onAction="#checkGrades" text="Check Grades">
+                     <graphic>
+                        <ListView fx:id="students" prefHeight="200.0" prefWidth="200.0" />
+                     </graphic></MenuItem>
+                  <MenuItem mnemonicParsing="false" onAction="#courseList" text="Students Courses/Assignment" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Messaging">
+            <items>
+              <MenuItem mnemonicParsing="false" onAction="#checkMessages" text="Check Messages" />
+                  <MenuItem mnemonicParsing="false" onAction="#sendMess" text="Send Message" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+      <TextFlow layoutX="571.0" layoutY="379.0" prefHeight="366.0" prefWidth="575.0">
+         <children>
+            <TextArea fx:id="textAreaLeft" editable="false" prefHeight="367.0" prefWidth="575.0" style="-fx-control-inner-background: #000000; -fx-font-family: Consolas; -fx-highlight-fill: #00ff00; -fx-highlight-text-fill: #000000; -fx-text-fill: #00ff00; -fx-font-size: 18px;">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </TextArea>
+         </children>
+      </TextFlow>
+      <AnchorPane fx:id="anchor" layoutX="14.0" layoutY="379.0" prefHeight="367.0" prefWidth="469.0">
+         <children>
+            <Button fx:id="messBtn" layoutX="403.0" layoutY="24.0" mnemonicParsing="false" onAction="#messageSent" style="-fx-background-color: #808080; -fx-text-fill: #ffffff;" text="Send">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Button>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>
