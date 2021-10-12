@@ -1,0 +1,105 @@
+50 points
+
+Your task is to develop a consensus server, and ensure that the code you develop is correct.  The consensus server will JeroMQ use the ZeroMQ open source messaging library, receive proposed consensus values using threads, process them, and return the decided value as a result.
+
+You should create a new project using Maven.  In order to use JeroMQ, you must include the following lines in the <dependencies> section of your pom.xml file:
+
+<dependency>
+<groupId>org.zeromq</groupId>
+<artifactId>jeromq</artifactId>
+<version>0.5.2</version>
+</dependency>
+To run your project with external dependencies, you can use the following command line, where "com.mycompany.app" is the name of your Java package, and "hwserver" is the name of the class you wish to execute.
+
+mvn exec:java -Dexec.mainClass='com.mycompany.app.hwserver'
+You should use the ZeroMQ framework to develop a multithreaded server.  You may wish to consider the JeroMQ's multithreaded service code.
+
+JeroMQ's multithreaded service code creates a "router" and a "dealer."  The router binds to a TCP port, and waits for client messages.  The dealer transfers received messages to "worker" threads.
+
+Each worker thread should submit the value it received from a client, to a Consensus object.  That consensus object should inherit from the abstract Consensus class.  Note that there are several important differences between the Consensus class given here, and the one provided in your textbook.  First, since there is no longer a 1:1 mapping between threads and calls to the decide method (a single thread might handle more than one call to decide() for different clients), each thread must provide a unique index of the client, when it calls the decide() method.  Second, since the decide() method must function for an arbitrary number of threads, we now use a ConcurrentHashMap, instead of an array, for proposed.
+
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.*;
+
+abstract class Consensus {
+    protected ConcurrentHashMap<Integer,Object> proposed =
+        new ConcurrentHashMap<Integer,Object>();
+
+    public void propose(int threadIdx, Object value) {
+        System.out.println("propose Id: " + threadIdx);
+        proposed.put(threadIdx, value);
+    }
+    abstract public Object decide(int threadIdx, Object val);
+}
+There are quite a few Consensus objects, and each has a Consensus number.
+
+Consensus Number	Object
+1	reader/writer registers
+2	test & set, swap, fetch & add, queue, stack
+2n-2	n-register assignment
+{"version":"1.1","math":"<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>&#x221E;</mo></math>"}	memory-to-memory move and swap, queue with peek, compare & swap, sticky register
+
+Some Consensus objects, such as stack, test & set, queue, and several others, have a corresponding data structure in Java. Others, such as sticky register, do not, and must be implemented separately.  For example, sticky register can be implemented as follows.
+
+public class StickyRegister {
+    private int value;
+    private boolean wasSet = false;
+    public synchronized void set(int v) {
+        if (!wasSet)
+        value = v;
+        wasSet = true;
+    }
+    public synchronized int get() {
+        return value;
+    }
+}
+You should implement consensus using StickyRegister, Stack, and GetAndSet().  To be correct, an implementation of Consensus must be both valid and consistent.  For each object, you must describe, in a separate document:
+
+1. Why your implementation is consistent.
+2. Why your implementation is valid.
+3. That Consensus fails with your object, if the consensus number is exceeded.  Obviously, for objects with an infinite consensus number, you cannot demonstrate this.
+
+As an estimate, your document might be a half page for each method.  For example, let's say you implement CompareAndSet consensus as follows:
+
+class CompareAndSetConsensus extends Consensus {
+private static AtomicInteger i = new AtomicInteger(-1);
+
+public Object decide(int threadIdx, Object val) {
+
+propose(threadIdx, val);
+System.out.println("idx: " + threadIdx);
+if(true == i.compareAndSet(-1, threadIdx))
+{
+return val;
+}
+return proposed.get(i.get());
+}
+}
+
+The thread must return one of the values proposed: each thread atomically compares -1 to the value in i, and if i still holds -1, i is updated to the thread's ID.  This guarantees validity: one of the proposed values is returned. Each thread that completes the compareAndSet() following the first thread gets the first thread's threadIdx, and returns the first thread's proposed value. This ensures that all threads return the same value. Finally, the decide method works for any number of threads (so the consensus number is {"version":"1.1","math":"<math xmlns="http://www.w3.org/1998/Math/MathML"><mo>&#x221E;</mo></math>"}) because once i is no longer one, it never changes again.
+
+You should also submit three versions of your consensus server, one for each consensus object you implement.  You may assume, as the book does, that these are "one time" objects, so your hardware server must be restarted each time to reset the consensus object.
+
+You should create a client that tests your server under various conditions.  For example, it should test numbers up to and larger than the consensus number, and show the results in that case.  It should also test solo executions.  Report the results of your testing, and indicate how to run your tests.  Your client should start multiple threads to perform its tests.
+
+Grading:
+
+For this program, the rubric will be applied as follows.
+
+Canonical: 20% weight.
+Correctness: 30% weight.  The code must appear execute correctly.
+Cohesiveness: 30%.  The design and documentation must be comprehensive correct.
+Clarity: 15%
+Comments: 5:
+
+Your code should:
+
+- Exit correctly and cleanly.
+- Use no timeouts or timers.
+- Follow the assignment instructions.
+- Test your code to ensure that it is correct.
+- Work for a number of threads up to and including the consensus number.
+
+Turn your code in using the Program Submission Instructions in the Course Materials, but include a set of instructions to execute each client.
+
+Improperly laid out code, or code that doesn't meet the description of the assigment will be penalized, in addition to the above categories.

@@ -1,0 +1,7 @@
+ 
+ #lang racket
+ (define (up-to-first-char lst)
+(cond
+ ((null? lst) '())
+ ((not(number? (car lst))) (up-to-first-char (cdr lst)))
+ (else (cons (car lst) (up-to-first-char (cdr lst))))))

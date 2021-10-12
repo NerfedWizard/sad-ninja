@@ -1,0 +1,15 @@
+
+Loel Nelson
+The results are: 
+
+Producer wrote: 0
+Producer wrote: 1
+Producer wrote: 2
+Consumer read: 2
+Producer wrote: 3
+Consumer read: 3
+Producer wrote: 4
+Consumer read: 4
+Consumer read: 4
+Consumer read: 4
+Calculated Sum: 17
