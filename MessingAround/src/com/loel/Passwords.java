@@ -1,27 +1,53 @@
 package com.loel;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
+import java.util.Scanner;
+import java.util.StringTokenizer;
+
 import org.passay.*;
 
 public class Passwords {
+	private static FileReader fr;
+	private static BufferedReader br;
+	private static FileWriter fw;
+	private static BufferedWriter bw;
+	private static StringTokenizer strtok;
+	private static String s;
 
 	public static void main(String[] args) {
-		System.out.println(generatePassayPassword());
-
+		Scanner sc = new Scanner(System.in);
+		System.out.println("What is this password for?");
+		String name = sc.nextLine();
+		try {
+			writeToFile(name, generatePassayPassword());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		sc.close();
 	}
 
 	public static String generatePassayPassword() {
 		PasswordGenerator gen = new PasswordGenerator();
 		CharacterData lowerCaseChars = EnglishCharacterData.LowerCase;
 		CharacterRule lowerCaseRule = new CharacterRule(lowerCaseChars);
-		lowerCaseRule.setNumberOfCharacters(3);
+		lowerCaseRule.setNumberOfCharacters(4);
 
 		CharacterData upperCaseChars = EnglishCharacterData.UpperCase;
 		CharacterRule upperCaseRule = new CharacterRule(upperCaseChars);
-		upperCaseRule.setNumberOfCharacters(3);
+		upperCaseRule.setNumberOfCharacters(4);
 
 		CharacterData digitChars = EnglishCharacterData.Digit;
 		CharacterRule digitRule = new CharacterRule(digitChars);
-		digitRule.setNumberOfCharacters(3);
+		digitRule.setNumberOfCharacters(4);
 
 		CharacterData specialChars = new CharacterData() {
 			public String getErrorCode() {
@@ -29,7 +55,7 @@ public class Passwords {
 			}
 
 			public String getCharacters() {
-				return "!@#$%^&*()_+";
+				return "!@#$%^&*()_+<>~`";
 			}
 		};
 		CharacterRule splCharRule = new CharacterRule(specialChars);
@@ -39,4 +65,15 @@ public class Passwords {
 		return password;
 	}
 
+	public static void writeToFile(String who, String passGen) throws IOException {
+		try (FileWriter fw = new FileWriter("E:\\Passwords\\password.txt", true);
+				BufferedWriter bw = new BufferedWriter(fw);
+				PrintWriter out = new PrintWriter(bw)) {
+			out.println("\n---> " + who + " <---");
+			out.println("--> " + passGen + " <--");
+		} catch (IOException e) {
+			System.err.println("file not written");
+		}
+		System.out.println("Password: --> " + passGen + " <-- has been saved!!");
+	}
 }
