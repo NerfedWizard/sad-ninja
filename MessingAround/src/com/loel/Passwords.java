@@ -12,10 +12,24 @@ public class Passwords {
 		Scanner sc = new Scanner(System.in);
 		System.out.println("What is this password for?");
 		String name = sc.nextLine();
-		try {
-			writeToFile(name, generatePassayPassword());
-		} catch (IOException e) {
-			e.printStackTrace();
+		System.out.println("What is the username?");
+		String username = sc.nextLine();
+		System.out.println("Do you want a new password? (Y)Create new password (N)Enter existing password to be saved");
+		String response = sc.nextLine();
+		if (response.toLowerCase().equals("y")) {
+			try {
+				writeToFile(name, username, generatePassayPassword());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		} else {
+			System.out.println("What is the password you would like saved?");
+			String password = sc.nextLine();
+			try {
+				writeToFile(name, username, password);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 		sc.close();
 	}
@@ -44,17 +58,16 @@ public class Passwords {
 			}
 		};
 		CharacterRule splCharRule = new CharacterRule(specialChars);
-		splCharRule.setNumberOfCharacters(3);
-
-		String password = gen.generatePassword(15, splCharRule, lowerCaseRule, upperCaseRule, digitRule);
-		return password;
+			splCharRule.setNumberOfCharacters(3);
+		return gen.generatePassword(15, splCharRule, lowerCaseRule, upperCaseRule, digitRule);
 	}
 
-	public static void writeToFile(String who, String passGen) throws IOException {
+	public static void writeToFile(String who, String username, String passGen) throws IOException {
 		try (FileWriter fw = new FileWriter("E:\\Passwords\\password.txt", true);
 				BufferedWriter bw = new BufferedWriter(fw);
 				PrintWriter out = new PrintWriter(bw)) {
 			out.println("\n---> " + who + " <---");
+			out.println("---> " + username + " <---");
 			out.println("--> " + passGen + " <--");
 		} catch (IOException e) {
 			System.err.println("file not written");
